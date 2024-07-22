@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://party.websim.ai/api/v1/sites/m7sqjUDGlsKlpBJUF/html?origin=https%3A%2F%2Fwebsim.ai -->
+<html w-tid="0"><head w-tid="1"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>html{min-height:100%}.ctxmenu{position:fixed;border:1px solid #999;padding:2px 0;box-shadow:#aaa 3px 3px 3px;background:#fff;margin:0;z-index:9999;overflow-y:auto;font:15px Verdana, sans-serif;box-sizing:border-box}.ctxmenu li{margin:1px 0;display:block;position:relative;user-select:none}.ctxmenu li.heading{font-weight:bold;margin-left:-5px}.ctxmenu li span{display:block;padding:2px 20px;cursor:default}.ctxmenu li a{color:inherit;text-decoration:none}.ctxmenu li.icon{padding-left:15px}.ctxmenu img.icon{position:absolute;width:18px;left:10px;top:2px}.ctxmenu li.disabled{color:#ccc}.ctxmenu li.divider{border-bottom:1px solid #aaa;margin:5px 0}.ctxmenu li.interactive:hover{background:rgba(0, 0, 0, .1)}.ctxmenu li.submenu::after{content:"";position:absolute;display:block;top:0;bottom:0;right:.4em;margin:auto .1rem auto auto;border-right:1px solid #000;border-top:1px solid #000;transform:rotate(45deg);width:.3rem;height:.3rem}.ctxmenu li.submenu.disabled::after{border-color:#ccc}</style><!--<base href="" w-tid="2">--><base href=".">
+<link rel="stylesheet" href="./fonts(1).css">
+<link rel="stylesheet" href="./ctxmenu.css">
+
+
+
+<style w-tid="3">
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+.simulation-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 1200px;
+}
+.simulation {
+  margin: 0 10px 40px;
+  flex-basis: calc(33% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gate {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  margin: 40px auto 20px;
+}
+.gate-body {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 80px 80px 10px;
+  position: relative;
+}
+.gate-body::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+.and-gate .gate-body { background-color: #3498db; }
+.and-gate .gate-body::after { content: "AND"; }
+.or-gate .gate-body { background-color: #e74c3c; }
+.or-gate .gate-body::after { content: "OR"; }
+.not-gate .gate-body { background-color: #34495e; }
+.not-gate .gate-body::after { content: "NOT"; }
+.nand-gate .gate-body { background-color: #9b59b6; }
+.nand-gate .gate-body::after { content: "NAND"; }
+.nor-gate .gate-body { background-color: #2ecc71; }
+.nor-gate .gate-body::after { content: "NOR"; }
+.xor-gate .gate-body { background-color: #f39c12; }
+.xor-gate .gate-body::after { content: "XOR"; }
+.input, .output {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #2c3e50;
+  border-radius: 50%;
+}
+.input-a { top: 32px; left: -8px; }
+.input-b { bottom: 16px; left: -8px; }
+.output { top: 32px; right: -8px; }
+.switch {
+  display: inline-block;
+  width: 32px;
+  height: 20px;
+  position: absolute;
+  z-index: 10;
+}
+.switch-a { top: 22px; left: -24px; }
+.switch-b { bottom: 6px; left: -24px; }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 20px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:checked + .slider:before {
+  transform: translateX(12px);
+}
+.led {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: .4s;
+  position: absolute;
+  right: -20px;
+  top: 28px;
+}
+.led.on {
+  background-color: #f1c40f;
+  box-shadow: 0 0 15px #f1c40f;
+}
+.label {
+  position: absolute;
+  font-size: 10px;
+}
+.label-a { top: 28px; left: -16px; }
+.label-b { bottom: 12px; left: -16px; }
+table {
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+  font-size: 12px;
+}
+th {
+  background-color: #f2f2f2;
+}
+.highlighted {
+  background-color: #E6F3FF;
+}
+#home-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+}
+#home-button:hover {
+  background-color: #2980b9;
+}
+</style>
+<title w-tid="4">Simulador de Compuertas Lógicas</title>
+</head>
+<body w-tid="5">
+  <a href="https://www.simuladorlogica.net/Simular%20Circuito/index.html" id="home-button" w-tid="6">Inicio</a>
+  <div class="simulation-container" w-tid="7">
+    <div class="simulation" w-tid="8">
+      <div class="gate and-gate" w-tid="9">
+        <div class="gate-body" w-tid="10">
+          <div class="input input-a" w-tid="11"></div>
+          <div class="input input-b" w-tid="12"></div>
+          <div class="output" w-tid="13"></div>
+        </div>
+        <label class="switch switch-a" w-tid="14">
+          <input type="checkbox" id="switchAnd-A" w-tid="15">
+          <span class="slider" w-tid="16"></span>
+        </label>
+        <label class="switch switch-b" w-tid="17">
+          <input type="checkbox" id="switchAnd-B" w-tid="18">
+          <span class="slider" w-tid="19"></span>
+        </label>
+        <div id="ledAnd" class="led" w-tid="20"></div>
+        <span class="label label-a" w-tid="21">A</span>
+        <span class="label label-b" w-tid="22">B</span>
+      </div>
+      <table id="truthTableAnd" w-tid="23">
+        <tbody><tr w-tid="24"><th w-tid="25">A</th><th w-tid="26">B</th><th w-tid="27">S</th></tr>
+        <tr w-tid="28"><td w-tid="29">0</td><td w-tid="30">0</td><td w-tid="31">0</td></tr>
+        <tr w-tid="32"><td w-tid="33">0</td><td w-tid="34">1</td><td w-tid="35">0</td></tr>
+        <tr w-tid="36"><td w-tid="37">1</td><td w-tid="38">0</td><td w-tid="39">0</td></tr>
+        <tr w-tid="40"><td w-tid="41">1</td><td w-tid="42">1</td><td w-tid="43">1</td></tr>
+      </tbody></table>
+    </div>
+    
+    <div class="simulation" w-tid="44">
+      <div class="gate or-gate" w-tid="45">
+        <div class="gate-body" w-tid="46">
+          <div class="input input-a" w-tid="47"></div>
+          <div class="input input-b" w-tid="48"></div>
+          <div class="output" w-tid="49"></div>
+        </div>
+        <label class="switch switch-a" w-tid="50">
+          <input type="checkbox" id="switchOr-A" w-tid="51">
+          <span class="slider" w-tid="52"></span>
+        </label>
+        <label class="switch switch-b" w-tid="53">
+          <input type="checkbox" id="switchOr-B" w-tid="54">
+          <span class="slider" w-tid="55"></span>
+        </label>
+        <div id="ledOr" class="led" w-tid="56"></div>
+        <span class="label label-a" w-tid="57">A</span>
+        <span class="label label-b" w-tid="58">B</span>
+      </div>
+      <table id="truthTableOr" w-tid="59">
+        <tbody><tr w-tid="60"><th w-tid="61">A</th><th w-tid="62">B</th><th w-tid="63">S</th></tr>
+        <tr w-tid="64"><td w-tid="65">0</td><td w-tid="66">0</td><td w-tid="67">0</td></tr>
+        <tr w-tid="68"><td w-tid="69">0</td><td w-tid="70">1</td><td w-tid="71">1</td></tr>
+        <tr w-tid="72"><td w-tid="73">1</td><td w-tid="74">0</td><td w-tid="75">1</td></tr>
+        <tr w-tid="76"><td w-tid="77">1</td><td w-tid="78">1</td><td w-tid="79">1</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="simulation" w-tid="80">
+      <div class="gate not-gate" w-tid="81">
+        <div class="gate-body" w-tid="82">
+          <div class="input input-a" w-tid="83"></div>
+          <div class="output" w-tid="84"></div>
+        </div>
+        <label class="switch switch-a" w-tid="85">
+          <input type="checkbox" id="switchNot-A" w-tid="86">
+          <span class="slider" w-tid="87"></span>
+        </label>
+        <div id="ledNot" class="led" w-tid="88"></div>
+        <span class="label label-a" w-tid="89">A</span>
+      </div>
+      <table id="truthTableNot" w-tid="90">
+        <tbody><tr w-tid="91"><th w-tid="92">A</th><th w-tid="93">S</th></tr>
+        <tr w-tid="94"><td w-tid="95">0</td><td w-tid="96">1</td></tr>
+        <tr w-tid="97"><td w-tid="98">1</td><td w-tid="99">0</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="simulation" w-tid="100">
+      <div class="gate nand-gate" w-tid="101">
+        <div class="gate-body" w-tid="102">
+          <div class="input input-a" w-tid="103"></div>
+          <div class="input input-b" w-tid="104"></div>
+          <div class="output" w-tid="105"></div>
+        </div>
+        <label class="switch switch-a" w-tid="106">
+          <input type="checkbox" id="switchNand-A" w-tid="107">
+          <span class="slider" w-tid="108"></span>
+        </label>
+        <label class="switch switch-b" w-tid="109">
+          <input type="checkbox" id="switchNand-B" w-tid="110">
+          <span class="slider" w-tid="111"></span>
+        </label>
+        <div id="ledNand" class="led" w-tid="112"></div>
+        <span class="label label-a" w-tid="113">A</span>
+        <span class="label label-b" w-tid="114">B</span>
+      </div>
+      <table id="truthTableNand" w-tid="115">
+        <tbody><tr w-tid="116"><th w-tid="117">A</th><th w-tid="118">B</th><th w-tid="119">S</th></tr>
+        <tr w-tid="120"><td w-tid="121">0</td><td w-tid="122">0</td><td w-tid="123">1</td></tr>
+        <tr w-tid="124"><td w-tid="125">0</td><td w-tid="126">1</td><td w-tid="127">1</td></tr>
+        <tr w-tid="128"><td w-tid="129">1</td><td w-tid="130">0</td><td w-tid="131">1</td></tr>
+        <tr w-tid="132"><td w-tid="133">1</td><td w-tid="134">1</td><td w-tid="135">0</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="simulation" w-tid="136">
+      <div class="gate nor-gate" w-tid="137">
+        <div class="gate-body" w-tid="138">
+          <div class="input input-a" w-tid="139"></div>
+          <div class="input input-b" w-tid="140"></div>
+          <div class="output" w-tid="141"></div>
+        </div>
+        <label class="switch switch-a" w-tid="142">
+          <input type="checkbox" id="switchNor-A" w-tid="143">
+          <span class="slider" w-tid="144"></span>
+        </label>
+        <label class="switch switch-b" w-tid="145">
+          <input type="checkbox" id="switchNor-B" w-tid="146">
+          <span class="slider" w-tid="147"></span>
+        </label>
+        <div id="ledNor" class="led" w-tid="148"></div>
+        <span class="label label-a" w-tid="149">A</span>
+        <span class="label label-b" w-tid="150">B</span>
+      </div>
+      <table id="truthTableNor" w-tid="151">
+        <tbody><tr w-tid="152"><th w-tid="153">A</th><th w-tid="154">B</th><th w-tid="155">S</th></tr>
+        <tr w-tid="156"><td w-tid="157">0</td><td w-tid="158">0</td><td w-tid="159">1</td></tr>
+        <tr w-tid="160"><td w-tid="161">0</td><td w-tid="162">1</td><td w-tid="163">0</td></tr>
+        <tr w-tid="164"><td w-tid="165">1</td><td w-tid="166">0</td><td w-tid="167">0</td></tr>
+        <tr w-tid="168"><td w-tid="169">1</td><td w-tid="170">1</td><td w-tid="171">0</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="simulation" w-tid="172">
+      <div class="gate xor-gate" w-tid="173">
+        <div class="gate-body" w-tid="174">
+          <div class="input input-a" w-tid="175"></div>
+          <div class="input input-b" w-tid="176"></div>
+          <div class="output" w-tid="177"></div>
+        </div>
+        <label class="switch switch-a" w-tid="178">
+          <input type="checkbox" id="switchXor-A" w-tid="179">
+          <span class="slider" w-tid="180"></span>
+        </label>
+        <label class="switch switch-b" w-tid="181">
+          <input type="checkbox" id="switchXor-B" w-tid="182">
+          <span class="slider" w-tid="183"></span>
+        </label>
+        <div id="ledXor" class="led" w-tid="184"></div>
+        <span class="label label-a" w-tid="185">A</span>
+        <span class="label label-b" w-tid="186">B</span>
+      </div>
+      <table id="truthTableXor" w-tid="187">
+        <tbody><tr w-tid="188"><th w-tid="189">A</th><th w-tid="190">B</th><th w-tid="191">S</th></tr>
+        <tr w-tid="192"><td w-tid="193">0</td><td w-tid="194">0</td><td w-tid="195">0</td></tr>
+        <tr w-tid="196"><td w-tid="197">0</td><td w-tid="198">1</td><td w-tid="199">1</td></tr>
+        <tr w-tid="200"><td w-tid="201">1</td><td w-tid="202">0</td><td w-tid="203">1</td></tr>
+        <tr w-tid="204"><td w-tid="205">1</td><td w-tid="206">1</td><td w-tid="207">0</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <script w-tid="208">
+    function setupGate(switchAId, switchBId, ledId, truthTableId, operation) {
+      const switchA = document.getElementById(switchAId);
+      const switchB = document.getElementById(switchBId);
+      const led = document.getElementById(ledId);
+      const truthTable = document.getElementById(truthTableId);
+
+      function updateLED() {
+        const result = operation(switchA.checked, switchB ? switchB.checked : null);
+        if (result) {
+          led.classList.add('on');
+        } else {
+          led.classList.remove('on');
+        }
+        updateTruthTable();
+      }
+
+      function updateTruthTable() {
+        const rows = truthTable.getElementsByTagName('tr');
+        for (let i = 1; i < rows.length; i++) {
+          const cells = rows[i].getElementsByTagName('td');
+          const a = cells[0].textContent === '1';
+          const b = cells.length > 2 ? cells[1].textContent === '1' : null;
+          
+          if (a === switchA.checked && (b === null || b === (switchB ? switchB.checked : null))) {
+            rows[i].classList.add('highlighted');
+          } else {
+            rows[i].classList.remove('highlighted');
+          }
+        }
+      }
+
+      switchA.addEventListener('change', updateLED);
+      if (switchB) {
+        switchB.addEventListener('change', updateLED);
+      }
+    }
+
+    setupGate('switchAnd-A', 'switchAnd-B', 'ledAnd', 'truthTableAnd', (a, b) => a && b);
+    setupGate('switchOr-A', 'switchOr-B', 'ledOr', 'truthTableOr', (a, b) => a || b);
+    setupGate('switchNot-A', null, 'ledNot', 'truthTableNot', (a) => !a);
+    setupGate('switchNand-A', 'switchNand-B', 'ledNand', 'truthTableNand', (a, b) => !(a && b));
+    setupGate('switchNor-A', 'switchNor-B', 'ledNor', 'truthTableNor', (a, b) => !(a || b));
+    setupGate('switchXor-A', 'switchXor-B', 'ledXor', 'truthTableXor', (a, b) => a !== b);
+  </script>
+</body></html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://party.websim.ai/api/v1/sites/zLX3Rr1R0rZRNvcim/html?origin=https%3A%2F%2Fwebsim.ai -->
+<html w-tid="0"><head w-tid="1"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>html{min-height:100%}.ctxmenu{position:fixed;border:1px solid #999;padding:2px 0;box-shadow:#aaa 3px 3px 3px;background:#fff;margin:0;z-index:9999;overflow-y:auto;font:15px Verdana, sans-serif;box-sizing:border-box}.ctxmenu li{margin:1px 0;display:block;position:relative;user-select:none}.ctxmenu li.heading{font-weight:bold;margin-left:-5px}.ctxmenu li span{display:block;padding:2px 20px;cursor:default}.ctxmenu li a{color:inherit;text-decoration:none}.ctxmenu li.icon{padding-left:15px}.ctxmenu img.icon{position:absolute;width:18px;left:10px;top:2px}.ctxmenu li.disabled{color:#ccc}.ctxmenu li.divider{border-bottom:1px solid #aaa;margin:5px 0}.ctxmenu li.interactive:hover{background:rgba(0, 0, 0, .1)}.ctxmenu li.submenu::after{content:"";position:absolute;display:block;top:0;bottom:0;right:.4em;margin:auto .1rem auto auto;border-right:1px solid #000;border-top:1px solid #000;transform:rotate(45deg);width:.3rem;height:.3rem}.ctxmenu li.submenu.disabled::after{border-color:#ccc}</style><!--<base href="" w-tid="2">--><base href=".">
+<link rel="stylesheet" href="./fonts(1).css">
+<link rel="stylesheet" href="./ctxmenu.css">
+
+
+<title w-tid="3">Calculadora Binaria TD1 UNM</title>
+<style w-tid="4">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  flex: 1;
+  position: relative;
+}
+
+h1, h2, h3 {
+  color: #2c3e50;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+form, .result-container {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="submit"], button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover, button:hover {
+  background-color: #2980b9;
+}
+
+.error {
+  border-color: #e74c3c;
+}
+
+table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.binary {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  font-size: 18px;
+  color: #16a085;
+}
+
+.input-values, .complemento-dos, .operation-steps, .analisis-registro {
+  background-color: #ecf0f1;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+#result {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.valid {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.invalid {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+#compuertasButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+  width: 30%; /* Reducido al 30% del ancho original */
+}
+
+#compuertasButton:hover {
+  background-color: #c0392b;
+}
+</style>
+<script w-tid="5">
+function validateInput(input, bits) {
+  const regex = new RegExp(`^[01]{${bits}}$`);
+  if (!regex.test(input.value)) {
+    input.classList.add('error');
+    return false;
+  }
+  input.classList.remove('error');
+  return true;
+}
+
+function updateInputLength(select) {
+  const bits = select.value;
+  document.getElementById('numero1').maxLength = bits;
+  document.getElementById('numero2').maxLength = bits;
+}
+
+function binToDecimal(bin) {
+  return parseInt(bin, 2);
+}
+
+function decimalToBin(dec, bits) {
+  return (dec >>> 0).toString(2).padStart(bits, '0');
+}
+
+function complementoDos(bin, bits) {
+  let complement = '';
+  for (let i = 0; i < bits; i++) {
+    complement += bin[i] === '0' ? '1' : '0';
+  }
+  return sumaBinaria(complement, '1'.padStart(bits, '0'), bits);
+}
+
+function sumaBinaria(a, b, bits) {
+  let suma = (binToDecimal(a) + binToDecimal(b)) & ((1 << bits) - 1);
+  return decimalToBin(suma, bits);
+}
+
+function calculateParidadPar(bin) {
+  const unos = bin.split('1').length - 1;
+  return unos % 2 === 0 ? 0 : 1;
+}
+
+function analizarRegistro(signo, zero, carry, overflow, operacion, bits) {
+  let validoMagnitud = true;
+  let validoSignado = true;
+  let mensaje = '';
+
+  if (carry === 1) {
+    validoMagnitud = false;
+    mensaje += 'Resultado no válido en Magnitud debido al carry. ';
+  }
+  if (overflow === 1) {
+    validoSignado = false;
+    mensaje += 'Resultado no válido en Signado debido al overflow. ';
+  }
+
+  if (validoMagnitud && validoSignado) {
+    mensaje = 'El resultado es válido tanto en Magnitud como en Signado.';
+  } else if (validoMagnitud) {
+    mensaje += 'El resultado es válido en Magnitud.';
+  } else if (validoSignado) {
+    mensaje += 'El resultado es válido en Signado.';
+  }
+
+  return mensaje;
+}
+
+function calculateResult(event) {
+  event.preventDefault();
+  const bits = parseInt(document.getElementById('bits').value);
+  const numero1 = document.getElementById('numero1').value;
+  const numero2 = document.getElementById('numero2').value;
+  const operacion = document.getElementById('operacion').value;
+
+  if (!validateInput(document.getElementById('numero1'), bits) || !validateInput(document.getElementById('numero2'), bits)) {
+    alert('Por favor, ingrese números binarios válidos de acuerdo a la cantidad de bits seleccionada.');
+    return;
+  }
+
+  let resultado, signo, zero, carry, overflow, paridadPar;
+  let complementoNumero2 = '';
+  let operationSteps = '';
+
+  if (operacion === 'suma') {
+    resultado = sumaBinaria(numero1, numero2, bits);
+    carry = (binToDecimal(numero1) + binToDecimal(numero2)) >= (1 << bits) ? 1 : 0;
+    overflow = (numero1[0] === numero2[0] && resultado[0] !== numero1[0]) ? 1 : 0;
+    operationSteps = `
+      <p>Suma directa de los números binarios:</p>
+      <p>${numero1} + ${numero2} = ${resultado}</p>
+    `;
+  } else {
+    complementoNumero2 = complementoDos(numero2, bits);
+    resultado = sumaBinaria(numero1, complementoNumero2, bits);
+    carry = (binToDecimal(numero1) + binToDecimal(complementoNumero2)) >= (1 << bits) ? 1 : 0;
+    
+    const signoBit1 = numero1[0];
+    const signoBit2 = numero2[0];
+    const signoResultado = resultado[0];
+    overflow = (signoBit1 !== signoBit2 && signoResultado === signoBit2) ? 1 : 0;
+
+    operationSteps = `
+      <p>1. Calcular el complemento a dos del segundo número:</p>
+      <p>Complemento a dos de ${numero2} = ${complementoNumero2}</p>
+      <p>2. Sumar el primer número con el complemento a dos del segundo:</p>
+      <p>${numero1} + ${complementoNumero2} = ${resultado}</p>
+    `;
+  }
+
+  signo = resultado[0] === '1' ? 1 : 0;
+  zero = binToDecimal(resultado) === 0 ? 1 : 0;
+  paridadPar = calculateParidadPar(resultado);
+
+  document.getElementById('operacionTipo').textContent = operacion === 'suma' ? 'Suma' : 'Resta';
+  document.getElementById('numero1Value').textContent = numero1;
+  document.getElementById('numero2Value').textContent = numero2;
+  document.getElementById('resultadoBinario').textContent = resultado;
+  document.getElementById('signo').textContent = signo;
+  document.getElementById('zero').textContent = zero;
+  document.getElementById('carry').textContent = carry;
+  document.getElementById('overflow').textContent = overflow;
+  document.getElementById('paridadPar').textContent = paridadPar;
+
+  document.getElementById('operationSteps').innerHTML = operationSteps;
+  document.getElementById('operationSteps').style.display = 'block';
+
+  if (operacion === 'resta') {
+    document.getElementById('complementoNumero2').textContent = complementoNumero2;
+    document.getElementById('complementoDos').style.display = 'block';
+    document.getElementById('analisisRegistroContainer').style.display = 'none';
+  } else {
+    document.getElementById('complementoDos').style.display = 'none';
+    const analisisRegistro = analizarRegistro(signo, zero, carry, overflow, operacion, bits);
+    document.getElementById('analisisRegistro').innerHTML = analisisRegistro;
+    document.getElementById('analisisRegistroContainer').style.display = 'block';
+  }
+
+  document.getElementById('result').style.display = 'block';
+}
+
+function resetCalculator() {
+  document.getElementById('bits').value = '4';
+  document.getElementById('numero1').value = '';
+  document.getElementById('numero2').value = '';
+  document.getElementById('operacion').value = 'suma';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('complementoDos').style.display = 'none';
+  document.getElementById('operationSteps').style.display = 'none';
+  document.getElementById('analisisRegistroContainer').style.display = 'none';
+  updateInputLength(document.getElementById('bits'));
+}
+
+function openCompuertas() {
+  window.open('compuertas/comp.html', '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form');
+  const bitsSelect = document.getElementById('bits');
+  const numero1Input = document.getElementById('numero1');
+  const numero2Input = document.getElementById('numero2');
+  const resetButton = document.getElementById('resetButton');
+  const compuertasButton = document.getElementById('compuertasButton');
+
+  updateInputLength(bitsSelect);
+
+  bitsSelect.addEventListener('change', function() {
+    updateInputLength(this);
+    numero1Input.value = '';
+    numero2Input.value = '';
+  });
+
+  numero1Input.addEventListener('input', function() {
+    validateInput(this, bitsSelect.value);
+  });
+
+  numero2Input.addEventListener('input', function() {
+    validateInput(this, bitsSelect.value);
+  });
+
+  form.addEventListener('submit', calculateResult);
+  resetButton.addEventListener('click', resetCalculator);
+  compuertasButton.addEventListener('click', openCompuertas);
+});
+</script>
+</head>
+<body w-tid="6">
+<div class="container" w-tid="7">
+  <button id="compuertasButton" w-tid="8">Compuertas</button>
+  <h1 w-tid="9">Calculadora Binaria TD1 UNM</h1>
+
+  <form w-tid="10">
+    <label for="bits" w-tid="11">Seleccione la cantidad de bits:</label>
+    <select id="bits" name="bits" w-tid="12">
+      <option value="4" w-tid="13">4 bits</option>
+      <option value="8" w-tid="14">8 bits</option>
+      <option value="16" w-tid="15">16 bits</option>
+    </select>
+    
+    <label for="numero1" w-tid="16">Número binario 1:</label>
+    <input type="text" id="numero1" name="numero1" required="" w-tid="17" maxlength="4">
+    
+    <label for="operacion" w-tid="18">Operación:</label>
+    <select id="operacion" name="operacion" w-tid="19">
+      <option value="suma" w-tid="20">Sumar</option>
+      <option value="resta" w-tid="21">Restar</option>
+    </select>
+    
+    <label for="numero2" w-tid="22">Número binario 2:</label>
+    <input type="text" id="numero2" name="numero2" required="" w-tid="23" maxlength="4">
+    
+    <input type="submit" value="Calcular" w-tid="24">
+    <button type="button" id="resetButton" w-tid="25">Reiniciar</button>
+  </form>
+
+  <div id="result" class="result-container" w-tid="26" style="display: none;">
+    <h2 w-tid="27">Resultado de la Operación</h2>
+    
+    <h3 w-tid="28">Operación: <span id="operacionTipo" w-tid="29">Resta</span></h3>
+    
+    <div class="input-values" w-tid="30">
+      <h3 w-tid="31">Valores de entrada:</h3>
+      <p w-tid="32">
+        Número 1: <span id="numero1Value" w-tid="33">0101</span><br w-tid="34">
+        Número 2: <span id="numero2Value" w-tid="35">0001</span>
+      </p>
+    </div>
+
+    <div id="complementoDos" class="complemento-dos" style="display: none;" w-tid="36">
+      <h3 w-tid="37">Complemento a dos del Número 2:</h3>
+      <p class="binary" w-tid="38">
+        <span id="complementoNumero2" w-tid="39">1111</span>
+      </p>
+    </div>
+
+    <div id="operationSteps" class="operation-steps" style="display: none;" w-tid="40">
+      <p>1. Calcular el complemento a dos del segundo número:</p>
+      <p>Complemento a dos de 0001 = 1111</p>
+      <p>2. Sumar el primer número con el complemento a dos del segundo:</p>
+      <p>0101 + 1111 = 0100</p>
+    </div>
+
+    <p class="binary" w-tid="41">
+      Resultado final: <span id="resultadoBinario" w-tid="42">0100</span>
+    </p>
+
+    <h3 w-tid="43">Registro de Estado</h3>
+    <table w-tid="44">
+      <tbody><tr w-tid="45">
+        <th w-tid="46">Signo (S)</th>
+        <th w-tid="47">Zero (Z)</th>
+        <th w-tid="48">Carry (C)</th>
+        <th w-tid="49">Overflow (V)</th>
+        <th w-tid="50">Paridad Par (P)</th>
+      </tr>
+      <tr w-tid="51">
+        <td id="signo" w-tid="52">0</td>
+        <td id="zero" w-tid="53">0</td>
+        <td id="carry" w-tid="54">1</td>
+        <td id="overflow" w-tid="55">0</td>
+        <td id="paridadPar" w-tid="56">1</td>
+      </tr>
+    </tbody></table>
+
+    <div id="analisisRegistroContainer" class="analisis-registro" style="display: none;" w-tid="57">
+      <h3 w-tid="58">Análisis de Registro</h3>
+      <p id="analisisRegistro" w-tid="59"></p>
+    </div>
+  </div>
+</div>
+<footer w-tid="60">
+  Hecho por Germán A. Casco - Universidad Nacional de Moreno 2024
+</footer>
+</body></html>
